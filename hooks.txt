@@ -59,3 +59,28 @@ React.useEffect(()=>{
 
 
 after the render the cleanup code runs and than new effect is invoked
+
+
+
+Custom Hooks helps in seperating non visual logic from UI
+
+Problem-the easiest way to reuse stateful logic in react is by copying/pasting
+
+Solution before hooks was higher order components and render props
+
+Render Prop:They are created by enabling a component to accepts a 
+function prop that it will use to render its children
+
+//example of render prop
+<DataProvider render={data => (
+  <h1>Hello {data.target}</h1>
+)}/>
+
+
+const [state,dispatch]=React.useReducer((state,action)=>{
+
+},initialValue)
+
+useState and useReducer both allow us add state to the functional component but the difference
+is useReducer allows us to do declarative state updates whereas in useState we do imperative state updates 
+which is cool if there isn't a lot of state living inside my function
