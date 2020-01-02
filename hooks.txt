@@ -1,0 +1,61 @@
+React Hooks 
+
+1.class Fields solved problem of writing a constructor always to initialize class fields
+
+useState is the tool to preserve values between functional calls/renders and to trigger a rerender of the component
+
+useState vs setState
+in setState each state field is present on the state object whereas in useState each state field is defined by each unique useState
+call where the initial value to that field and the updater function is specified
+
+in setState if one field is updated the other state fields are not updated whereas in case of useState each time we pass a new value
+the old ones are completely changed from that state field this can happen in case of object as state field and you want to update a 
+specific part of that object in such cases we use another hook useReducer
+
+in setState we can pass a callback function where we specify the current value and change state based on that
+in useState we do the same
+
+in useState we have something called lazy state initialization suppose your initial values to state are calculated after a function invocation
+and now that function has a heavy calculation inside it than at each render we would be doing that unnecessary invocation rather we can 
+pass a callback to useState and let it return the heavy calcuation function that way react knows that this is to be invoked only once
+
+
+
+syntax
+function Theme(){
+  const [theme,setTheme]=React.useState('dark')
+
+  return <button onClick={()=>setTheme('light')}>light</button>
+}
+
+
+The useEffect hook so whenever we want to make side effects(interacting with outside world) in our app we use the useEffect hook
+The useEffect function invokes its callback whenever react renders everything and browser has also painted that.
+now React.useEffect(()=>getProfile('ashu').then(setUser))
+the above effect leads to an infinite loop situtation coz once the render and painting is being done the effect runs and it triggers
+a rerender which than invokes the effect again.
+to prevent this we pass a second argument to useEffect to tell the hook on what value changes should the hook be invoked
+
+based on this there are 3 situations
+1.React.useEffect(()=>{
+  //will be invoked on initial render and all subsequent rerenders
+})
+2.React.useEffect(()=>{
+  //will be invoked on the initial render and when "id" or "auth" change
+},[id,auth])
+3.React.useEffect(()=>{
+  //will be invoked only on initial render
+},[])
+
+
+we can do clean up of effect by writing the clean up code in the returned function of useEffect 
+React.useEffect(()=>{
+  subscribe(username)
+  return ()=>{
+    unsubscribe(username)
+    setProfile(null)
+  }
+},[username])
+
+
+after the render the cleanup code runs and than new effect is invoked
